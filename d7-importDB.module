@@ -3,7 +3,7 @@
 function d7_importDB_menu() {
     $items = array();
     $items['import-page'] = array(
-        'title' => 'Импорт',
+        'title' => 'Import',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('Import_page_form'),
         'access callback' => TRUE,
