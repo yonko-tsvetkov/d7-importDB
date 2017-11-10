@@ -1,0 +1,59 @@
+<?php
+
+function d7_importDB_menu() {
+    $items = array();
+    $items['import-page'] = array(
+        'title' => 'Импорт',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('Import_page_form'),
+        'access callback' => TRUE,
+    );
+    return $items;
+}
+function d7_importDB_page_form($form, $form_state, $node) {
+    $form_state['storage']['node'] = $node;
+    $form = array();
+
+    $form['number1'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Title'),
+        '#size' => 30,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit'),
+    );
+    $form['actions'] = array(
+        '#type' => 'actions',
+    );
+    return $form;
+}
+function d7_importDB_function(){
+    $form = drupal_get_form('import_page_form');
+    $form = drupal_render($form);
+    return $form.'Page content';
+}
+function d7_importDB_node_create() {
+    $node = new stdClass();
+    db_set_active('fromdb');
+    $min = db_select('Contact', 'c')
+        ->fields('c')
+        ->execute()
+        ->fetchAssoc();
+    db_set_active();
+
+    $node->type = 'story';
+    node_object_prepare($node);
+    $node->title = 'Title';
+    $node->language = LANGUAGE_NONE;
+    $node->body[LANGUAGE_NONE][0]['value'] = 'Node teaser body';
+    $node->body[LANGUAGE_NONE][0]['summary'] = 'Node body';
+    $node->body[LANGUAGE_NONE][0]['format'] = 'filtered_html';
+    $node->uid = 1;
+    $node->status = 1;
+    $node->promote = 1;
+    node_save($node);
+}
+function d7_importDB_page_form_submit($form, &$form_state){
+    debug($form_state['values']);
+}
