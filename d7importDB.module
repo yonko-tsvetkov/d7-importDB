@@ -1,6 +1,6 @@
 <?php
 
-function d7_importDB_menu() {
+function d7importDB_menu() {
     $items = array();
     $items['import-page'] = array(
         'title' => 'Import',
@@ -10,7 +10,7 @@ function d7_importDB_menu() {
     );
     return $items;
 }
-function d7_importDB_page_form($form, $form_state, $node) {
+function d7importDB_page_form($form, $form_state, $node) {
     $form_state['storage']['node'] = $node;
     $form = array();
 
@@ -28,12 +28,12 @@ function d7_importDB_page_form($form, $form_state, $node) {
     );
     return $form;
 }
-function d7_importDB_function(){
+function d7importDB_function(){
     $form = drupal_get_form('import_page_form');
     $form = drupal_render($form);
     return $form.'Page content';
 }
-function d7_importDB_node_create() {
+function d7importDB_node_create() {
     $node = new stdClass();
     db_set_active('fromdb');
     $min = db_select('Contact', 'c')
@@ -54,6 +54,6 @@ function d7_importDB_node_create() {
     $node->promote = 1;
     node_save($node);
 }
-function d7_importDB_page_form_submit($form, &$form_state){
+function d7importDB_page_form_submit($form, &$form_state){
     debug($form_state['values']);
 }

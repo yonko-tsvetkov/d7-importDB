@@ -1,4 +1,4 @@
-name = importDB
+name = d7importDB
 description = Import New Nodes
 core = 7.x
 
